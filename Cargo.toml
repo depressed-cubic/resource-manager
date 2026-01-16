@@ -1,0 +1,11 @@
+[package]
+name = "resman"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+reqwest = { version = "0.13.1", features = ["json"] }
+serde = { version = "1.0.228", features = ["serde_derive"] }
+serde_json = "1.0.149"
+tokio = { version = "1.49.0", features = ["macros", "rt", "rt-multi-thread"] }
