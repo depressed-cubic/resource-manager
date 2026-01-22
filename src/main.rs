@@ -1,5 +1,6 @@
 use std::{env, io};
 
+use futures::StreamExt;
 use serde_json::Value;
 
 use crate::scraper::{CanvasScraper, TokenPair};
@@ -37,6 +38,10 @@ async fn main() {
     let user_id = &user_data["id"];
 
     println!("{}", user_data);
-    println!("{}", canvas.get(vec!["api", "v1", "courses"]).await.unwrap().text().await.unwrap());
+    println!("{:?}", canvas.get(vec!["api", "v1", "courses"]).await.unwrap().headers().get("Link").unwrap());
+    let mut stream = std::pin::pin![canvas.get_courses().unwrap()];
+    while let Some(course) = stream.next().await {
+        println!("{:?}", course)
+    }
 
 }
